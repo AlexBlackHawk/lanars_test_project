@@ -107,7 +107,7 @@ class _LoginFormState extends State<LoginForm> {
                     labelText: 'Email',
                     hintText: 'Enter your email',
                     // errorText: "Email is incorrect",
-                    errorText: !state.isValid ? 'Email is incorrect' : null,
+                    errorText: state.email.displayError != null ? 'Email is incorrect' : null,
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4),
                       borderSide: BorderSide(
@@ -177,7 +177,7 @@ class _LoginFormState extends State<LoginForm> {
                     labelText: 'Password',
                     hintText: 'Enter your password',
                     // errorText: "Password is incorrect",
-                    errorText: !state.isValid ? 'Password is incorrect' : null,
+                    errorText: state.password.displayError != null ? 'Password is incorrect' : null,
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4),
                       borderSide: BorderSide(

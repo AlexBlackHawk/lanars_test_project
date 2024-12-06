@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lanars_test_project/authentication/authentication.dart';
 import 'package:lanars_test_project/login/login.dart';
 import 'package:lanars_test_project/main/main.dart';
+import 'package:lanars_test_project/splash/splash.dart';
 import 'package:photos_repository/photos_repository.dart';
 import 'package:realm_data_provider/realm_data_provider.dart';
 
@@ -128,6 +129,7 @@ class _AppViewState extends State<AppView> {
           child: child,
         );
       },
+      onGenerateRoute: (_) => SplashPage.route(),
     );
   }
 }
