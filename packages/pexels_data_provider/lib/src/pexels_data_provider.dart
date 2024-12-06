@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 
 import 'models/models.dart';
+import 'package:pexels_data_provider/pexels_data_provider.dart';
 
 class PexelsDataProvider {
   PexelsDataProvider({Dio? dio})
@@ -11,17 +12,15 @@ class PexelsDataProvider {
 
   final Dio _dio;
 
-  Future<List> getPhotos() async {
+  Future<List<Photo>> getPhotos() async {
     _dio.options.headers["Authorization"] = _apiKey;
     final response = await _dio.get(
       _url,
     );
     Map<String, dynamic> photoData = response.data as Map<String, dynamic>;
     List photos = photoData["photos"] as List;
-    return photos;
-  }
-
-  Photo transformPhoto(Map<String, dynamic> photoMap) {
-    return Photo.fromJson(photoMap);
+    return photos.map((photo) {
+      return Photo.fromJson(photo);
+    }).toList();
   }
 }

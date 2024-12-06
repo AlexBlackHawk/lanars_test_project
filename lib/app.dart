@@ -1,36 +1,52 @@
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lanars_test_project/authentication/authentication.dart';
 import 'package:lanars_test_project/login/login.dart';
 import 'package:lanars_test_project/main/main.dart';
+import 'package:photos_repository/photos_repository.dart';
+import 'package:realm_data_provider/realm_data_provider.dart';
 
 class App extends StatefulWidget {
-  const App({super.key});
+  const App({super.key, required this.realmDataProvider});
+
+  final RealmDataProvider realmDataProvider;
 
   @override
   State<App> createState() => _AppState();
 }
 
 class _AppState extends State<App> {
+  late final AuthenticationRepository _authenticationRepository;
 
   @override
   void initState() {
-    // TODO: implement initState
+    _authenticationRepository = AuthenticationRepository(
+      realmDataProvider: widget.realmDataProvider,
+    );
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    _authenticationRepository.dispose();
+    widget.realmDataProvider.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: ,
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider.value(value: _authenticationRepository),
+        RepositoryProvider<PhotosRepository>(
+          create: (context) => PhotosRepository(
+            realmDataProvider: widget.realmDataProvider,
+          ),
+        ),
+      ],
       child: BlocProvider(
-        create: (_) => AuthenticationBloc()..add(AuthenticationSubscriptionRequested()),
+        create: (context) => AuthenticationBloc(authenticationRepository: _authenticationRepository)..add(AuthenticationSubscriptionRequested()),
         child: const AppView(),
       ),
     );
@@ -95,17 +111,17 @@ class _AppViewState extends State<AppView> {
         return BlocListener<AuthenticationBloc, AuthenticationState>(
           listener: (context, state) {
             switch (state.authStatus) {
-              case AuthenticationStatus.authenticated:
+              case AuthStatus.authenticated:
                 _navigator.pushAndRemoveUntil<void>(
                   MainPage.route(),
                       (route) => false,
                 );
-              case AuthenticationStatus.unauthenticated:
+              case AuthStatus.unauthenticated:
                 _navigator.pushAndRemoveUntil<void>(
                   LoginPage.route(),
                       (route) => false,
                 );
-              case AuthenticationStatus.unknown:
+              case AuthStatus.unknown:
                 break;
             }
           },

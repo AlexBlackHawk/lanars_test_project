@@ -10,3 +10,7 @@ sealed class MainEvent extends Equatable {
 final class MainPhotosLoaded extends MainEvent {
   const MainPhotosLoaded();
 }
+
+final class MainPhotosRefreshed extends MainEvent {
+  const MainPhotosRefreshed();
+}

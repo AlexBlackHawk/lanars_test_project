@@ -1,7 +1,7 @@
 name: realm_data_provider
 description: "A new Flutter package project."
 version: 0.0.1
-homepage:
+publish_to: none
 
 environment:
   sdk: ^3.5.4
@@ -11,6 +11,10 @@ dependencies:
   flutter:
     sdk: flutter
   realm: ^20.0.0
+  photos_repository:
+    path: ../photos_repository
+  authentication_repository:
+    path: ../authentication_repository
 
 dev_dependencies:
   flutter_test:

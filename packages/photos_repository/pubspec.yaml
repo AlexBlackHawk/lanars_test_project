@@ -1,7 +1,7 @@
 name: photos_repository
 description: "A new Flutter package project."
 version: 0.0.1
-homepage:
+publish_to: none
 
 environment:
   sdk: ^3.5.4
@@ -10,6 +10,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  pexels_data_provider:
+    path: ../pexels_data_provider
+  realm_data_provider:
+    path: ../realm_data_provider
 
 dev_dependencies:
   flutter_test:
